@@ -1,41 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for article in articles_page.object_list %}
 <article>
   <header>
-    <h2><a href="{{ SITEURL }}/{{ article.url }}#{{ article.slug }}">{{ article.title }}</a></h2>
-    <p>
-      Posted on {{ article.locale_date }} in <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
-      {% if article.tags %}
-      &#8226; Tagged with
-      {% for tag in article.tags %}
-      <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %},{% endif %}
-      {% endfor %}
-      {% endif %}
-      {% if DISQUS_SITENAME %}
-      &#8226; <a href="{{ SITEURL }}/{{ article.url }}#disqus_thread">Leave a comment</a>
-      {% endif %}
-    </p>
+    <h1>My name is Jonny, and I suck at web design</h1>
   </header>
   <div>
-    {% if summarise or article.metadata['summary'] or article.metadata['summarize'] %}
-      {{ article.summary }}
-      <a class="btn" href="{{ SITEURL }}/{{ article.url }}#{{ article.slug }}">Continue reading</a>
-    {% else %}
-      {{ article.content }}
-    {% endif %}
+    <h3>What I'm Hacking On</h3>
+    <p>I am the lead front-end developer at <a href="http://improbable.io">Improbable</a> working on <a href="http://improbable.io/2016/02/18/how-a-team-of-five-created-a-next-gen-mmo-with-unity-and-spatialos">SpatialOS</a>.  Me and my team hack with React, Redux, ThreeJS and Golang.  In the past I've worked for Amazon, Yamaha and Mind Candy.</p>
+
+    <h3>Things I've Open Sourced</h3>
+    <ul>
+      {% for name, description in OPENSOURCE %}
+        <li><a href="https://gitub.com/jonnyreeves/{{ name }}">{{ name }}</a> - {{ description }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Recent Blog Posts</h3>
+    <ul>
+    {% for article in articles_page.object_list %}
+      <li><a href="{{ SITEURL }}/{{ article.url }}#{{ article.slug }}">{{ article.title }}</a></li>
+    {% endfor %}
+    </ul>
   </div>
-  {% if not loop.last %}
-  <hr />
-  {% endif %}
 </article>
-{% endfor %}
-
-{% include "partial/pagination.html" %}
-{% endblock %}
-
-{% block additional_js %}
-  {% include "partial/jsonld.html" %}
-  {% include "partial/disqus_count.html" %}
 {% endblock %}
