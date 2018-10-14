@@ -7,12 +7,15 @@
     <h1>Archives</h1>
   </header>
   <div>
-    <dl>
-      {% for article in dates %}
-      <dt>{{ article.locale_date }}</dt>
-      <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
-      {% endfor %}
-    </dl>
+  {% for articles_group_by_year in dates|groupby('date.year')|reverse %}
+    {% set year = articles_group_by_year %}
+    <h3>{{ year.grouper }}</h3>
+    <ul>
+    {% for article in year.list|reverse %}
+      <li><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endfor %}
   </div>
 </article>
 {% endblock %}
